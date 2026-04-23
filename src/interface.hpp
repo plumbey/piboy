@@ -2,31 +2,48 @@
 
 #include <raylib-cpp.hpp>
 
-typedef enum pbModes { STATS, ITEMS, DATA } pbModes;
+namespace pb {
+typedef enum Modes { STATS, ITEMS, DATA } Modes;
 
-class pbInterface {
-    raylib::Font font;
-    raylib::Color fontColor;
-    static constexpr int fontSize = 128;
-    static constexpr int curTimeStrSize = 25;
-    char curTimeStr[curTimeStrSize];
-    Vector2 fontPixelSize = {0, 0};
-    Vector2 fontPos = {0, 0};
-    pbModes pbMode = STATS;
-
+class Page {
    public:
-    pbInterface();
-    void renderClock() const;
-    void updateClock();
-
-    void update();
+    // Page();
+    //~Page();
+    virtual void update();
+    virtual void render();
 };
 
-class pbPage {
+class Mode {
+   private:
+    std::vector<Page> pages;
+
    public:
-    pbPage();
-    void update();
-    void render() const;
+    // Mode();
+    //~Mode();
+    virtual void loadPage();
+    virtual void unloadPage();
 };
 
-class pbMode {};
+class Interface {
+   private:
+    Modes mode;
+    const int piWidth = 480;
+    const int piHeight = 320;
+    const int dbgScalingFactor = 2;
+
+    const int screenWidth = piWidth * dbgScalingFactor;
+    const int screenHeight = piHeight * dbgScalingFactor;
+
+    const raylib::Color bg = {0, 12, 0};
+    raylib::Window w;
+    void renderMode();
+    Page* curPage;
+
+   public:
+    Interface();
+    void loadMode();
+    void update();
+    void gameLoop();
+};
+
+}  // namespace pb

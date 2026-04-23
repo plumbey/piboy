@@ -1,42 +1,47 @@
 #include "interface.hpp"
 
-#include <iostream>
 #include <raylib-cpp.hpp>
 
-#include "Keyboard.hpp"
+#include "StatsMode.hpp"
+#include "raylib.h"
 
-pbInterface::pbInterface() {
-    // Use large font size (400) to avoid pixelation
-    font = raylib::LoadFontEx("resources/monofonto rg.otf", 400, NULL, 0);
-    fontColor = raylib::Color{0, 238, 0};
+using namespace pb;
+
+void Page::render() {};
+void Page::update() {};
+
+raylib::Font f;
+
+Interface::Interface() {
+    mode = STATS;
+    w.Init(screenWidth, screenHeight);
+    SetTargetFPS(60);
+    f = LoadFontEx("resources/monofonto.otf", 400, NULL, 0);
+    curPage = new Clock(&f);
 }
 
-void pbInterface::renderClock() const {
-    raylib::DrawTextEx(font, curTimeStr, fontPos, fontSize, 0, fontColor);
-}
-
-void pbInterface::updateClock() {
-    std::time_t t = std::time(nullptr);
-    std::tm* localTime = std::localtime(&t);
-
-    std::strftime(curTimeStr, curTimeStrSize, "%H:%M", localTime);
-    Vector2 fontPixelSize = font.MeasureText(curTimeStr, fontSize, 0);
-    fontPos = {480 - fontPixelSize.x / 2, 320 - fontPixelSize.y / 2};
-    std::cout << fontPos.x << " " << fontPos.y << std::endl;
-}
-
-void pbInterface::update() {
-    if (raylib::Keyboard::IsKeyPressed('S')) {
-        pbMode = STATS;
-
-    } else if (raylib::Keyboard::IsKeyPressed('I')) {
-        pbMode = ITEMS;
-    } else if (raylib::Keyboard::IsKeyPressed('D')) {
-        pbMode = DATA;
+void Interface::gameLoop() {
+    raylib::Font font = LoadFontEx("resources/monofonto.otf", 400, NULL, 0);
+    while (!w.ShouldClose())  // Detect window close button or ESC key
+    {
+        // Update
+        curPage->update();
+        // Draw
+        BeginDrawing();
+        w.ClearBackground(bg);
+        curPage->render();
+        EndDrawing();
     }
 }
 
-/*
-void pbInterface::changeMode(pbModes mode) {
+void Interface::update() {
+    if (raylib::Keyboard::IsKeyPressed('S')) {
+        mode = STATS;
+    } else if (raylib::Keyboard::IsKeyPressed('I')) {
+        mode = ITEMS;
+    } else if (raylib::Keyboard::IsKeyPressed('D')) {
+        mode = DATA;
+    }
 }
-*/
+
+void Interface::renderMode() {}
