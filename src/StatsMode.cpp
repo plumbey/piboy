@@ -16,7 +16,7 @@ void Clock::update() {
     std::time_t t = std::time(nullptr);
     std::tm* localTime = std::localtime(&t);
 
-    std::strftime(curTimeStr, curTimeStrSize, "%H:%M", localTime);
+    std::strftime(curTimeStr, curTimeStrSize, "%r", localTime);
     Vector2 fontPixelSize = font->MeasureText(curTimeStr, fontSize, 0);
     fontPos = {480 - fontPixelSize.x / 2, 320 - fontPixelSize.y / 2};
 }

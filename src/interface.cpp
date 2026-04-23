@@ -1,47 +1,36 @@
 #include "interface.hpp"
 
-#include <raylib-cpp.hpp>
+typedef struct State {
+    typedef enum Modes { STATS, ITEMS, DATA } Modes;
+    Modes mode;
+    // Returns true if the mode has switched from the previous one
+    bool update() {
+        Modes prev = mode;
+        if (raylib::Keyboard::IsKeyDown(KEY_S)) {
+            mode = STATS;
+        } else if (raylib::Keyboard::IsKeyDown(KEY_I)) {
+            mode = ITEMS;
+        } else if (raylib::Keyboard::IsKeyDown(KEY_D)) {
+            mode = DATA;
+        }
 
-#include "StatsMode.hpp"
-#include "raylib.h"
-
-using namespace pb;
-
-void Page::render() {};
-void Page::update() {};
-
-raylib::Font f;
-
-Interface::Interface() {
-    mode = STATS;
-    w.Init(screenWidth, screenHeight);
-    SetTargetFPS(60);
-    f = LoadFontEx("resources/monofonto.otf", 400, NULL, 0);
-    curPage = new Clock(&f);
-}
-
-void Interface::gameLoop() {
-    raylib::Font font = LoadFontEx("resources/monofonto.otf", 400, NULL, 0);
-    while (!w.ShouldClose())  // Detect window close button or ESC key
-    {
-        // Update
-        curPage->update();
-        // Draw
-        BeginDrawing();
-        w.ClearBackground(bg);
-        curPage->render();
-        EndDrawing();
+        return prev != mode;
     }
-}
 
-void Interface::update() {
-    if (raylib::Keyboard::IsKeyPressed('S')) {
-        mode = STATS;
-    } else if (raylib::Keyboard::IsKeyPressed('I')) {
-        mode = ITEMS;
-    } else if (raylib::Keyboard::IsKeyPressed('D')) {
-        mode = DATA;
+    void render(raylib::Font& f) {
+        if (mode == Modes::STATS) {
+            // raylib::DrawTextEx(f, "In Stats!", raylib::Vector2{480, 320}, 60,
+            // 0,
+            //                    raylib::Color{0, 255, 0});
+
+        } else if (mode == Modes::ITEMS) {
+            // raylib::DrawTextEx(f, "In Items!", raylib::Vector2{480, 320}, 60,
+            // 0,
+            //                    raylib::Color{0, 255, 0});
+        } else if (mode == Modes::DATA) {
+            // raylib::DrawTextEx(f, "In Data!", raylib::Vector2{480, 320}, 60,
+            // 0,
+            //                    raylib::Color{0, 255, 0});
+        }
     }
-}
-
-void Interface::renderMode() {}
+} curMode;
