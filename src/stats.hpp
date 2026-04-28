@@ -1,7 +1,9 @@
-#pragma once
-#include "interface.hpp"
+#include <raylib-cpp.hpp>
 
-class Clock : public pb::Page {
+#include "modes.hpp"
+
+namespace pb {
+class Clock {
    private:
     raylib::Font* font;
     raylib::Color fontColor;
@@ -15,6 +17,20 @@ class Clock : public pb::Page {
     Clock(raylib::Font* f);
 
     void render();
-
     void update();
 };
+
+class StatsMode : public Mode {
+   private:
+    Clock* c;
+
+   public:
+    raylib::Font* font;
+    StatsMode() {};
+    ~StatsMode();
+    StatsMode(raylib::Font* f);
+    void render();
+    void update();
+};
+
+}  // namespace pb

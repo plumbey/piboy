@@ -2,7 +2,7 @@
   {
     "file": "src/interface.cpp",
     "arguments": [
-      "c++",
+      "/usr/bin/g++",
       "-MMD",
       "-MP",
       "-c",
@@ -13,7 +13,41 @@
       "-o",
       "bin/interface.o"
     ],
-    "directory": "/Users/emma/dev/whatever/piboy",
+    "directory": "/home/emc/dev/piboy",
     "output": "bin/interface.o"
+  },
+  {
+    "file": "src/main.cpp",
+    "arguments": [
+      "/usr/bin/g++",
+      "-MMD",
+      "-MP",
+      "-c",
+      "-std=c++20",
+      "-I",
+      "include",
+      "src/main.cpp",
+      "-o",
+      "bin/main.o"
+    ],
+    "directory": "/home/emc/dev/piboy",
+    "output": "bin/main.o"
+  },
+  {
+    "file": "src/StatsMode.cpp",
+    "arguments": [
+      "/usr/bin/g++",
+      "-MMD",
+      "-MP",
+      "-c",
+      "-std=c++20",
+      "-I",
+      "include",
+      "src/StatsMode.cpp",
+      "-o",
+      "bin/StatsMode.o"
+    ],
+    "directory": "/home/emc/dev/piboy",
+    "output": "bin/StatsMode.o"
   }
 ]

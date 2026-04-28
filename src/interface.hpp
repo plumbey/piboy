@@ -2,24 +2,23 @@
 
 #include <raylib-cpp.hpp>
 
+#include "data.hpp"
+#include "items.hpp"
+#include "stats.hpp"
+
 namespace pb {
 
-class Page {
-   public:
-    Page();
-    ~Page();
-    virtual void update() {};
-    virtual void render() {};
-};
-
-class Mode {
+class State {
    private:
-    std::vector<Page> pages;
+    typedef enum Mode_e { STATS, ITEMS, DATA } Mode_e;
+    Mode_e curMode = STATS;
+    StatsMode s;
+    raylib::Font* font;
 
    public:
-    Mode();
-    virtual ~Mode();
-    virtual void loadPage();
-    virtual void unloadPage();
+    State(raylib::Font* font);
+    ~State();
+    bool update();
+    void render();
 };
 }  // namespace pb

@@ -1,36 +1,40 @@
 #include "interface.hpp"
 
-typedef struct State {
-    typedef enum Modes { STATS, ITEMS, DATA } Modes;
-    Modes mode;
-    // Returns true if the mode has switched from the previous one
-    bool update() {
-        Modes prev = mode;
-        if (raylib::Keyboard::IsKeyDown(KEY_S)) {
-            mode = STATS;
-        } else if (raylib::Keyboard::IsKeyDown(KEY_I)) {
-            mode = ITEMS;
-        } else if (raylib::Keyboard::IsKeyDown(KEY_D)) {
-            mode = DATA;
-        }
+#include <iostream>
 
-        return prev != mode;
+using namespace pb;
+
+State::State(raylib::Font* f) {
+    s.font = f;
+    std::cout << "Created State" << std::endl;
+}
+
+State::~State() {}
+
+// Returns true if the curMode has switched from the previous one
+bool State::update() {
+    Mode_e prevMode = curMode;
+    if (raylib::Keyboard::IsKeyDown(KEY_S)) {
+        curMode = STATS;
+        s.update();
+    } else if (raylib::Keyboard::IsKeyDown(KEY_I)) {
+        curMode = ITEMS;
+    } else if (raylib::Keyboard::IsKeyDown(KEY_D)) {
+        curMode = DATA;
     }
 
-    void render(raylib::Font& f) {
-        if (mode == Modes::STATS) {
-            // raylib::DrawTextEx(f, "In Stats!", raylib::Vector2{480, 320}, 60,
-            // 0,
-            //                    raylib::Color{0, 255, 0});
+    return prevMode != curMode;
+}
 
-        } else if (mode == Modes::ITEMS) {
-            // raylib::DrawTextEx(f, "In Items!", raylib::Vector2{480, 320}, 60,
-            // 0,
-            //                    raylib::Color{0, 255, 0});
-        } else if (mode == Modes::DATA) {
-            // raylib::DrawTextEx(f, "In Data!", raylib::Vector2{480, 320}, 60,
-            // 0,
-            //                    raylib::Color{0, 255, 0});
+void State::render() {
+    switch (curMode) {
+        case STATS: {
+            s.render();
+            break;
         }
+        case ITEMS:
+            exit(1);
+        case DATA:
+            exit(1);
     }
-} curMode;
+}

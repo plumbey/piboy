@@ -1,4 +1,6 @@
-#include "StatsMode.hpp"
+#include "stats.hpp"
+
+#include <ctime>
 
 using namespace pb;
 
@@ -9,7 +11,8 @@ Clock::Clock(raylib::Font* f) {
 }
 
 void Clock::render() {
-    raylib::DrawTextEx(*font, curTimeStr, fontPos, fontSize, 0, fontColor);
+    raylib::DrawText("hi", 480, 320, 60, RAYWHITE);
+    // raylib::DrawTextEx(*font, curTimeStr, fontPos, fontSize, 0, fontColor);
 }
 
 void Clock::update() {
@@ -20,3 +23,9 @@ void Clock::update() {
     Vector2 fontPixelSize = font->MeasureText(curTimeStr, fontSize, 0);
     fontPos = {480 - fontPixelSize.x / 2, 320 - fontPixelSize.y / 2};
 }
+
+StatsMode::StatsMode(raylib::Font* f) { c = new Clock(f); }
+StatsMode::~StatsMode() {}
+
+void StatsMode::render() { c->render(); }
+void StatsMode::update() { c->update(); }

@@ -84,6 +84,8 @@ lib: submodules
 $(target): $(objects)
 	$(CXX) $(objects) -o $(target) $(linkFlags)
 
+debug: $(objects)
+	$(CXX) -g $(objects) -o $(target) $(linkFlags)
 # Add all rules from dependency files
 -include $(depends)
 
