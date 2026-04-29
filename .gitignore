@@ -3,3 +3,4 @@ lib
 bin
 .idea
 .DS_Store
+compile_commands.json
