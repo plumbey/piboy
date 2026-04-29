@@ -3,12 +3,13 @@
 #include <ctime>
 #include <string>
 
-#include "raylib.h"
+#include "Keyboard.hpp"
 
 using namespace pb;
 
 void Clock::render(PageData& pd) {
-    raylib::DrawTextEx(*pd.font, curTimeStr, fontPos, fontSize, 0, fontColor);
+    raylib::DrawTextEx(*pd.font, curTimeStr, fontPos, fontSize, 0,
+                       pd.fontColor);
 }
 
 void Clock::update(PageData& pd) {
@@ -32,8 +33,10 @@ Status::Status() {
 
 void Status::render(PageData& pd) {
     for (int i = 0; i < healthSize; i++) {
-        raylib::DrawText(std::to_string(healths[i]).c_str(), 480, 320 + i * 100,
-                         60, raylib::Color::White());
+        Vector2 fontPos = {480, static_cast<float>(320 + i * 100)};
+        raylib::DrawTextEx(*pd.font,
+                           healthNames[i] + std::to_string(healths[i]), fontPos,
+                           60, 0, pd.fontColor);
     }
 }
 
@@ -43,18 +46,16 @@ StatsMode::StatsMode() {
 }
 
 void StatsMode::update(PageData& pd) {
-    switch (GetKeyPressed()) {
-        case KeyboardKey::KEY_PERIOD:
-            curPage = (curPage + 1) % pages.size();
-            break;
-        case KeyboardKey::KEY_COMMA:
-            curPage = curPage - 1 < 0 ? pages.size() - 1 : curPage - 1;
-            break;
+    if (raylib::Keyboard::IsKeyPressed(KeyboardKey::KEY_PERIOD)) {
+        curPage = (curPage + 1) % pages.size();
+    } else if (raylib::Keyboard::IsKeyPressed(KeyboardKey::KEY_COMMA)) {
+        curPage = (curPage - 1) < 0 ? pages.size() - 1 : curPage - 1;
     }
+
     pages[curPage]->update(pd);
 }
 
 void StatsMode::render(PageData& pd) {
-    raylib::DrawText("In stats mode", 480, 320, 60, raylib::Color::White());
+    // raylib::DrawText("In stats mode", 700, 320, 60, raylib::Color::White());
     pages[curPage]->render(pd);
 }

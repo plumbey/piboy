@@ -4,11 +4,12 @@
 #include <vector>
 
 namespace pb {
-typedef struct {
+struct PageData {
     raylib::Font* font;
+    const raylib::Color fontColor = {0, 238, 0};
     int screenWidth;
     int screenHeight;
-} PageData;
+};
 
 class Page {
    public:

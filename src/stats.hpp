@@ -5,7 +5,6 @@
 namespace pb {
 class Clock : public Page {
    private:
-    raylib::Color fontColor = {0, 238, 0};
     static constexpr int fontSize = 256;
     static constexpr int curTimeStrSize = 25;
     char curTimeStr[curTimeStrSize];
@@ -31,9 +30,13 @@ class Status : public Page {
         };
         float healths[healthSize];
     };
+    std::string healthNames[healthSize] = {
+        "Left Arm Health: ",  "Right Arm Health: ", "Left Leg Health: ",
+        "Right Leg Health: ", "Torso Health: ",     "Head Health: ",
+    };
 
    public:
-    void update(PageData& pd) override;
+    void update(PageData& pd) override {};
     void render(PageData& pd) override;
     Status();
 };
