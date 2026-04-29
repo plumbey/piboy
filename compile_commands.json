@@ -1,27 +1,47 @@
 [
   {
-    "file": "src/interface.cpp",
+    "file": "src/data.cpp",
     "arguments": [
-      "/usr/bin/g++",
+      "c++",
       "-MMD",
       "-MP",
+      "-g",
       "-c",
       "-std=c++20",
       "-I",
       "include",
-      "src/interface.cpp",
+      "src/data.cpp",
       "-o",
-      "bin/interface.o"
+      "bin/data.o"
     ],
-    "directory": "/home/emc/dev/piboy",
-    "output": "bin/interface.o"
+    "directory": "/Users/emma/dev/whatever/piboy",
+    "output": "bin/data.o"
+  },
+  {
+    "file": "src/items.cpp",
+    "arguments": [
+      "c++",
+      "-MMD",
+      "-MP",
+      "-g",
+      "-c",
+      "-std=c++20",
+      "-I",
+      "include",
+      "src/items.cpp",
+      "-o",
+      "bin/items.o"
+    ],
+    "directory": "/Users/emma/dev/whatever/piboy",
+    "output": "bin/items.o"
   },
   {
     "file": "src/main.cpp",
     "arguments": [
-      "/usr/bin/g++",
+      "c++",
       "-MMD",
       "-MP",
+      "-g",
       "-c",
       "-std=c++20",
       "-I",
@@ -30,24 +50,25 @@
       "-o",
       "bin/main.o"
     ],
-    "directory": "/home/emc/dev/piboy",
+    "directory": "/Users/emma/dev/whatever/piboy",
     "output": "bin/main.o"
   },
   {
-    "file": "src/StatsMode.cpp",
+    "file": "src/stats.cpp",
     "arguments": [
-      "/usr/bin/g++",
+      "c++",
       "-MMD",
       "-MP",
+      "-g",
       "-c",
       "-std=c++20",
       "-I",
       "include",
-      "src/StatsMode.cpp",
+      "src/stats.cpp",
       "-o",
-      "bin/StatsMode.o"
+      "bin/stats.o"
     ],
-    "directory": "/home/emc/dev/piboy",
-    "output": "bin/StatsMode.o"
+    "directory": "/Users/emma/dev/whatever/piboy",
+    "output": "bin/stats.o"
   }
 ]

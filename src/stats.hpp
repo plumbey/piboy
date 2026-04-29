@@ -2,10 +2,12 @@
 
 #include "interface.hpp"
 
+extern const int dbgScalingFactor;
+
 namespace pb {
 class Clock : public Page {
    private:
-    static constexpr int fontSize = 256;
+    const int fontSize = 64 * dbgScalingFactor;
     static constexpr int curTimeStrSize = 25;
     char curTimeStr[curTimeStrSize];
     Vector2 fontPixelSize = {0, 0};
@@ -16,8 +18,7 @@ class Clock : public Page {
     void render(PageData& pd) override;
 };
 
-class Status : public Page {
-   private:
+class Condition : public Page {
     static constexpr int healthSize = 6;
     union {
         struct {
@@ -36,15 +37,79 @@ class Status : public Page {
     };
 
    public:
+    Condition();
     void update(PageData& pd) override {};
+    void render(PageData& pd) override;
+};
+
+class Radiation : public Page {
+   public:
+    void update(PageData& pd) override {};
+    void render(PageData& pd) override {};
+};
+
+class Effects : public Page {
+   public:
+    void update(PageData& pd) override {};
+    void render(PageData& pd) override {};
+};
+
+class Status : public Page {
+   private:
+    Clock clk;
+    Condition cnd;
+    Radiation rad;
+    Effects eff;
+    int curPage = 0;
+    std::vector<Page*> pages;
+
+   public:
+    void update(PageData& pd) override;
     void render(PageData& pd) override;
     Status();
 };
 
+class Special : public Page {
+   public:
+    void update(PageData& pd) override {};
+    void render(PageData& pd) override {};
+};
+class Skills : public Page {
+   public:
+    void update(PageData& pd) override {};
+    void render(PageData& pd) override {};
+};
+class Perks : public Page {
+   public:
+    void update(PageData& pd) override {};
+    void render(PageData& pd) override {};
+};
+class General : public Page {
+   public:
+    void update(PageData& pd) override {};
+    void render(PageData& pd) override {};
+};
+
 class StatsMode : public Mode {
    private:
-    Clock c;
-    Status s;
+    static constexpr int selectionAmt = 5;
+    union {
+        struct {
+            raylib::Rectangle statusRec;
+            raylib::Rectangle specialRec;
+            raylib::Rectangle skillsRec;
+            raylib::Rectangle perksRec;
+            raylib::Rectangle generalRec;
+        };
+        raylib::Rectangle selections[selectionAmt];
+    };
+
+    raylib::Texture2D bg_template;
+    Status statusPage;
+    Special specialPage;
+    Skills skillsPage;
+    Perks perksPage;
+    General generalPage;
 
    public:
     void update(PageData& pd) override;

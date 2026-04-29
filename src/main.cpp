@@ -4,25 +4,26 @@
 
 const int piWidth = 480;
 const int piHeight = 320;
-const int dbgScalingFactor = 4;
+extern const int dbgScalingFactor = 1;
 
 const int screenWidth = piWidth * dbgScalingFactor;
 const int screenHeight = piHeight * dbgScalingFactor;
 const raylib::Color bg = {0, 12, 0};
 
-pb::StatsMode stats;
-pb::DataMode data;
-pb::ItemsMode items;
-pb::Mode* curMode = &stats;
-
 int main() {
-    raylib::Window w(screenWidth, screenHeight, "piboy!",
-                     FLAG_WINDOW_UNDECORATED);
+    raylib::Window w(screenWidth, screenHeight, "piboy!"
+                     /*,FLAG_WINDOW_UNDECORATED*/);
     raylib::Font f =
-        LoadFontEx("resources/monofonto.otf", 200 * dbgScalingFactor, NULL, 0);
+        LoadFontEx("resources/monofonto.otf", 100 * dbgScalingFactor, NULL, 0);
     pb::PageData pd = {
         .font = &f, .screenWidth = screenWidth, .screenHeight = screenHeight};
-    SetTargetFPS(60);
+    SetTargetFPS(30);
+    BeginDrawing();
+    EndDrawing();
+    pb::StatsMode stats;
+    pb::DataMode data;
+    pb::ItemsMode items;
+    pb::Mode* curMode = &stats;
 
     while (!w.ShouldClose()) {
         switch (GetKeyPressed()) {

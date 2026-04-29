@@ -21,7 +21,7 @@ class Page {
 
 class Mode {
    protected:
-    int curPage;
+    int curPage = 0;
     std::vector<Page*> pages;
     // virtual void loadPage() = 0;
     // virtual void unloadPage() = 0;
