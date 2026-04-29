@@ -4,6 +4,7 @@
 
 namespace pb {
 class Clock : public Page {
+   private:
     raylib::Color fontColor = {0, 238, 0};
     static constexpr int fontSize = 256;
     static constexpr int curTimeStrSize = 25;
@@ -12,17 +13,39 @@ class Clock : public Page {
     Vector2 fontPos = {0, 0};
 
    public:
-    void update(PageData& pd);
-    void render(PageData& pd);
+    void update(PageData& pd) override;
+    void render(PageData& pd) override;
+};
+
+class Status : public Page {
+   private:
+    static constexpr int healthSize = 6;
+    union {
+        struct {
+            float leftArmHealth;
+            float rightArmHealth;
+            float leftLegHealth;
+            float rightLegHealth;
+            float torsoHealth;
+            float headHealth;
+        };
+        float healths[healthSize];
+    };
+
+   public:
+    void update(PageData& pd) override;
+    void render(PageData& pd) override;
+    Status();
 };
 
 class StatsMode : public Mode {
    private:
     Clock c;
+    Status s;
 
    public:
-    void update(PageData& pd);
-    void render(PageData& pd);
+    void update(PageData& pd) override;
+    void render(PageData& pd) override;
     StatsMode();
 };
 

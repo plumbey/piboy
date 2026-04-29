@@ -12,14 +12,15 @@ typedef struct {
 
 class Page {
    public:
-    Page() = default;
-    virtual ~Page() = default;
     virtual void update(PageData& pd) = 0;
     virtual void render(PageData& pd) = 0;
+    virtual ~Page() = default;
+    Page() = default;
 };
 
 class Mode {
    protected:
+    int curPage;
     std::vector<Page*> pages;
     // virtual void loadPage() = 0;
     // virtual void unloadPage() = 0;

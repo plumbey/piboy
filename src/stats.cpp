@@ -1,6 +1,9 @@
 #include "stats.hpp"
 
 #include <ctime>
+#include <string>
+
+#include "raylib.h"
 
 using namespace pb;
 
@@ -14,13 +17,44 @@ void Clock::update(PageData& pd) {
 
     std::strftime(curTimeStr, curTimeStrSize, "%r", localTime);
     Vector2 fontPixelSize = pd.font->MeasureText(curTimeStr, fontSize, 0);
-    fontPos = {static_cast<float>(pd.screenWidth) / 2 - fontPixelSize.x / 2,
-               static_cast<float>(pd.screenHeight) / 2 - fontPixelSize.y / 2};
+    fontPos = {((pd.screenWidth) - fontPixelSize.x) / 2,
+               ((pd.screenHeight) - fontPixelSize.y) / 2};
 }
 
-StatsMode::StatsMode() { pages.push_back(&c); }
+Status::Status() {
+    leftArmHealth = 0.2;
+    rightArmHealth = 0.5;
+    leftLegHealth = 0.9;
+    rightLegHealth = 1.0;
+    torsoHealth = 0.1;
+    headHealth = 0.3;
+}
+
+void Status::render(PageData& pd) {
+    for (int i = 0; i < healthSize; i++) {
+        raylib::DrawText(std::to_string(healths[i]).c_str(), 480, 320 + i * 100,
+                         60, raylib::Color::White());
+    }
+}
+
+StatsMode::StatsMode() {
+    pages.push_back(&c);
+    pages.push_back(&s);
+}
+
+void StatsMode::update(PageData& pd) {
+    switch (GetKeyPressed()) {
+        case KeyboardKey::KEY_PERIOD:
+            curPage = (curPage + 1) % pages.size();
+            break;
+        case KeyboardKey::KEY_COMMA:
+            curPage = curPage - 1 < 0 ? pages.size() - 1 : curPage - 1;
+            break;
+    }
+    pages[curPage]->update(pd);
+}
+
 void StatsMode::render(PageData& pd) {
     raylib::DrawText("In stats mode", 480, 320, 60, raylib::Color::White());
-    pages[0]->render(pd);
+    pages[curPage]->render(pd);
 }
-void StatsMode::update(PageData& pd) { pages[0]->update(pd); }
