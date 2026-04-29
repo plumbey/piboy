@@ -4,28 +4,23 @@
 
 using namespace pb;
 
-Clock::Clock(raylib::Font* f) {
-    // Use large font size (400) to avoid pixelation
-    font = f;
-    fontColor = raylib::Color{0, 238, 0};
+void Clock::render(PageData& pd) {
+    raylib::DrawTextEx(*pd.font, curTimeStr, fontPos, fontSize, 0, fontColor);
 }
 
-void Clock::render() {
-    raylib::DrawText("hi", 480, 320, 60, RAYWHITE);
-    // raylib::DrawTextEx(*font, curTimeStr, fontPos, fontSize, 0, fontColor);
-}
-
-void Clock::update() {
+void Clock::update(PageData& pd) {
     std::time_t t = std::time(nullptr);
     std::tm* localTime = std::localtime(&t);
 
     std::strftime(curTimeStr, curTimeStrSize, "%r", localTime);
-    Vector2 fontPixelSize = font->MeasureText(curTimeStr, fontSize, 0);
-    fontPos = {480 - fontPixelSize.x / 2, 320 - fontPixelSize.y / 2};
+    Vector2 fontPixelSize = pd.font->MeasureText(curTimeStr, fontSize, 0);
+    fontPos = {static_cast<float>(pd.screenWidth) / 2 - fontPixelSize.x / 2,
+               static_cast<float>(pd.screenHeight) / 2 - fontPixelSize.y / 2};
 }
 
-StatsMode::StatsMode(raylib::Font* f) { c = new Clock(f); }
-StatsMode::~StatsMode() {}
-
-void StatsMode::render() { c->render(); }
-void StatsMode::update() { c->update(); }
+StatsMode::StatsMode() { pages.push_back(&c); }
+void StatsMode::render(PageData& pd) {
+    raylib::DrawText("In stats mode", 480, 320, 60, raylib::Color::White());
+    pages[0]->render(pd);
+}
+void StatsMode::update(PageData& pd) { pages[0]->update(pd); }

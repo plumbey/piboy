@@ -1,24 +1,33 @@
 #pragma once
 
 #include <raylib-cpp.hpp>
-
-#include "data.hpp"
-#include "items.hpp"
-#include "stats.hpp"
+#include <vector>
 
 namespace pb {
-
-class State {
-   private:
-    typedef enum Mode_e { STATS, ITEMS, DATA } Mode_e;
-    Mode_e curMode = STATS;
-    StatsMode s;
+typedef struct {
     raylib::Font* font;
+    int screenWidth;
+    int screenHeight;
+} PageData;
+
+class Page {
+   public:
+    Page() = default;
+    virtual ~Page() = default;
+    virtual void update(PageData& pd) = 0;
+    virtual void render(PageData& pd) = 0;
+};
+
+class Mode {
+   protected:
+    std::vector<Page*> pages;
+    // virtual void loadPage() = 0;
+    // virtual void unloadPage() = 0;
 
    public:
-    State(raylib::Font* font);
-    ~State();
-    bool update();
-    void render();
+    virtual void render(PageData& pd) = 0;
+    virtual void update(PageData& pd) = 0;
+    virtual ~Mode() = default;
+    Mode() = default;
 };
 }  // namespace pb

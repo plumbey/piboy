@@ -1,11 +1,11 @@
-#include "modes.hpp"
+#include "interface.hpp"
 
 namespace pb {
 class DataMode : public Mode {
+   private:
    public:
-    DataMode();
-    ~DataMode();
-    void render() {};
-    void update() {};
+    void update(PageData& pd) {};
+    void render(PageData& pd);
+    DataMode() = default;
 };
 }  // namespace pb

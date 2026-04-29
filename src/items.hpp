@@ -1,11 +1,11 @@
-#include "modes.hpp"
+#include "interface.hpp"
 
 namespace pb {
 class ItemsMode : public Mode {
+   private:
    public:
-    ItemsMode();
-    ~ItemsMode();
-    void render() {};
-    void update() {};
+    void update(PageData& pd) {};
+    void render(PageData& pd);
+    ItemsMode() = default;
 };
 }  // namespace pb

@@ -42,7 +42,7 @@ else
 	ifeq ($(UNAMEOS), Darwin)
 		# Set macOS macros
 		platform := macOS
-		CXX ?= clang++
+		CXX ?= g++
 		linkFlags += -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL
 	endif
 
@@ -92,7 +92,7 @@ debug: $(objects)
 # Compile objects to the build directory
 $(buildDir)/%.o: src/%.cpp Makefile
 	$(MKDIR) $(call platformpth, $(@D))
-	$(CXX) -MMD -MP -c $(compileFlags) $< -o $@ $(CXXFLAGS)
+	$(CXX) -MMD -MP -g -c $(compileFlags) $< -o $@ $(CXXFLAGS)
 
 # Run the executable
 execute: $(target)
