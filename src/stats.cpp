@@ -82,7 +82,7 @@ void Status::render(PageData& pd) {
 }
 
 StatsMode::StatsMode() {
-    bg_template = raylib::Texture2D("resources/pb_stats.png");
+    bg_template = raylib::Texture2D("resources/pb_stats_4x.png");
 
     statusRec = raylib::Rectangle((33.5), (303), (44), (14));
     specialRec = raylib::Rectangle((116), (303), (87), (14));
@@ -112,5 +112,6 @@ void StatsMode::render(PageData& pd) {
     pages[curPage]->render(pd);
     drawSelection(selections[curPage]);
 
-    bg_template.Draw();
+    // Scale down the 4x texture to the window size
+    bg_template.Draw({0, 0}, 0, 1.0f / dbgScalingFactor);
 }

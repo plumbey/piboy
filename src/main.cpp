@@ -11,8 +11,9 @@ const int screenHeight = piHeight * dbgScalingFactor;
 const raylib::Color bg = {0, 12, 0};
 
 int main() {
-    raylib::Window w(screenWidth, screenHeight, "piboy!"
-                     /*,FLAG_WINDOW_UNDECORATED*/);
+    raylib::Window w(
+        screenWidth, screenHeight, "piboy!",
+        FLAG_WINDOW_HIGHDPI | FLAG_MSAA_4X_HINT | FLAG_WINDOW_UNDECORATED);
     raylib::Font f =
         LoadFontEx("resources/monofonto.otf", 100 * dbgScalingFactor, NULL, 0);
     pb::PageData pd = {
