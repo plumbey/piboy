@@ -113,5 +113,5 @@ void StatsMode::render(PageData& pd) {
     drawSelection(selections[curPage]);
 
     // Scale down the 4x texture to the window size
-    bg_template.Draw({0, 0}, 0, 1.0f / dbgScalingFactor);
+    bg_template.Draw({0, 0}, 0, dbgScalingFactor / 4.0f);
 }
