@@ -46,7 +46,8 @@ Condition::Condition() {
 void Condition::render(PageData& pd) {
     for (int i = 0; i < healthSize; i++) {
         Vector2 fontPos = {
-            50, static_cast<float>((30 + i * 50)) * dbgScalingFactor};
+            static_cast<float>(125 * dbgScalingFactor),
+            static_cast<float>((60 + i * 35)) * dbgScalingFactor};
         raylib::DrawTextEx(*pd.font,
                            healthNames[i] + std::to_string(healths[i]), fontPos,
                            15 * dbgScalingFactor, 0, pd.fontColor);

@@ -4,7 +4,7 @@
 
 const int piWidth = 480;
 const int piHeight = 320;
-extern const int dbgScalingFactor = 1;
+extern const int dbgScalingFactor = 2;
 
 const int screenWidth = piWidth * dbgScalingFactor;
 const int screenHeight = piHeight * dbgScalingFactor;
@@ -15,7 +15,7 @@ int main() {
         screenWidth, screenHeight, "piboy!",
         FLAG_WINDOW_HIGHDPI | FLAG_MSAA_4X_HINT | FLAG_WINDOW_UNDECORATED);
     raylib::Font f =
-        LoadFontEx("resources/monofonto.otf", 100 * dbgScalingFactor, NULL, 0);
+        LoadFontEx("resources/monofonto.otf", 250 * dbgScalingFactor, NULL, 0);
     pb::PageData pd = {
         .font = &f, .screenWidth = screenWidth, .screenHeight = screenHeight};
     SetTargetFPS(30);

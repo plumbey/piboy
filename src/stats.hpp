@@ -45,18 +45,33 @@ class Condition : public Page {
 class Radiation : public Page {
    public:
     void update(PageData& pd) override {};
-    void render(PageData& pd) override {};
+    void render(PageData& pd) override {
+        raylib::DrawTextEx(*pd.font, "hello i am the radiation module",
+                           {static_cast<float>(125 * dbgScalingFactor),
+                            static_cast<float>(60 * dbgScalingFactor)},
+                           15 * dbgScalingFactor, 0, pd.fontColor);
+    };
 };
 
 class Effects : public Page {
    public:
     void update(PageData& pd) override {};
-    void render(PageData& pd) override {};
+    void render(PageData& pd) override {
+        raylib::DrawTextEx(*pd.font, "hello i am the effects module",
+                           {static_cast<float>(125 * dbgScalingFactor),
+                            static_cast<float>(60 * dbgScalingFactor)},
+                           15 * dbgScalingFactor, 0, pd.fontColor);
+    };
 };
 class Engineering : public Page {
    public:
     void update(PageData& pd) override {};
-    void render(PageData& pd) override {};
+    void render(PageData& pd) override {
+        raylib::DrawTextEx(*pd.font, "hello i am the engineering module",
+                           {static_cast<float>(125 * dbgScalingFactor),
+                            static_cast<float>(60 * dbgScalingFactor)},
+                           15 * dbgScalingFactor, 0, pd.fontColor);
+    };
 };
 
 class Status : public Page {
