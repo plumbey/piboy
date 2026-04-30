@@ -54,10 +54,17 @@ void Condition::render(PageData& pd) {
 }
 
 Status::Status() {
-    pages.push_back(&clk);
+    cndRec = raylib::Rectangle((18), (57), (29), (15));
+    radRec = raylib::Rectangle((18), (80), (29), (15));
+    effRec = raylib::Rectangle((18), (102), (29), (15));
+    clkRec = raylib::Rectangle((18), (125), (29), (15));
+    engRec = raylib::Rectangle((18), (148), (29), (15));
+
     pages.push_back(&cnd);
     pages.push_back(&rad);
     pages.push_back(&eff);
+    pages.push_back(&clk);
+    pages.push_back(&eng);
 }
 
 void Status::update(PageData& pd) {
@@ -69,7 +76,10 @@ void Status::update(PageData& pd) {
     pages[curPage]->update(pd);
 }
 
-void Status::render(PageData& pd) { pages[curPage]->render(pd); }
+void Status::render(PageData& pd) {
+    drawSelection(selections[curPage]);
+    pages[curPage]->render(pd);
+}
 
 StatsMode::StatsMode() {
     bg_template = raylib::Texture2D("resources/pb_stats.png");

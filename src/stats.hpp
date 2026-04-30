@@ -53,13 +53,30 @@ class Effects : public Page {
     void update(PageData& pd) override {};
     void render(PageData& pd) override {};
 };
+class Engineering : public Page {
+   public:
+    void update(PageData& pd) override {};
+    void render(PageData& pd) override {};
+};
 
 class Status : public Page {
    private:
+    static constexpr int selectionAmt = 5;
+    union {
+        struct {
+            raylib::Rectangle cndRec;
+            raylib::Rectangle radRec;
+            raylib::Rectangle effRec;
+            raylib::Rectangle clkRec;
+            raylib::Rectangle engRec;
+        };
+        raylib::Rectangle selections[selectionAmt];
+    };
     Clock clk;
     Condition cnd;
     Radiation rad;
     Effects eff;
+    Engineering eng;
     int curPage = 0;
     std::vector<Page*> pages;
 
