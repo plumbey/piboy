@@ -100,9 +100,9 @@ StatsMode::StatsMode() {
 }
 
 void StatsMode::update(PageData& pd) {
-    if (raylib::Keyboard::IsKeyPressed(KeyboardKey::KEY_PERIOD)) {
+    if (raylib::Keyboard::IsKeyPressed(KeyboardKey::KEY_H)) {
         curPage = (curPage + 1) % pages.size();
-    } else if (raylib::Keyboard::IsKeyPressed(KeyboardKey::KEY_COMMA)) {
+    } else if (raylib::Keyboard::IsKeyPressed(KeyboardKey::KEY_J)) {
         curPage = (curPage - 1) < 0 ? pages.size() - 1 : curPage - 1;
     }
 
